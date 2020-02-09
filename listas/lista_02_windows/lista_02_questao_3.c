@@ -18,14 +18,14 @@ void printarRegistroAluno(aluno aluno)
 int main()
 {
 	int numeroAlunos = 35;
-	aluno aluno[numeroAlunos];
+	aluno alunos[numeroAlunos];
 	for(int i = 0; i < numeroAlunos; i++)
 	{
 		printf("Informe o nome do aluno e as notas obtidas nas avaliações: parcial 1, parcial 2 e final, separados por 1 (um) espaço: ");
-		scanf("%s %lf %lf %lf", aluno[i].nome, &aluno[i].nota[0], &aluno[i].nota[1], &aluno[i].nota[2]);
+		scanf("%s %lf %lf %lf", alunos[i].nome, &alunos[i].nota[0], &alunos[i].nota[1], &alunos[i].nota[2]);
 	}
 	for(int i = 0; i < numeroAlunos; i++)
 	{
-		printarRegistroAluno(aluno[i]);
+		printarRegistroAluno(alunos[i]);
 	}
 }
