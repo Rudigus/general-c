@@ -77,16 +77,16 @@ int main()
         }
         while(numeroCartas >= 2)
         {
-            fila *inicio = acharInicio(fim);
-            printf(" %d", inicio->chave);
+            int chave = (acharInicio(fim))->chave;
+            printf(" %d", chave);
             desenfila(&fim);
             numeroCartas--;
             if(numeroCartas >= 2)
             {
                 printf(",");
-                inicio = acharInicio(fim);
+                chave = (acharInicio(fim))->chave;
                 desenfila(&fim);
-                enfila(&fim, inicio->chave);
+                enfila(&fim, chave);
             }
         }
         printf("\nRemaining card: %d\n", fim->chave);
