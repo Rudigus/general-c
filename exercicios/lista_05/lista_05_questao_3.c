@@ -5,6 +5,7 @@
 
 typedef struct caixa
 {
+    int id;
     int tempoProcessamentoItem;
     int tempoAtendimento;
     struct caixa *proximo;
@@ -19,6 +20,7 @@ typedef struct cliente
 caixa* inicializarCaixa()
 {
     caixa *ca = (caixa*) malloc(sizeof(caixa));
+    ca->id = -1;
     ca->tempoProcessamentoItem = -1;
     ca->tempoAtendimento = 0;
     ca->proximo = NULL;
@@ -33,10 +35,11 @@ cliente* inicializarCliente()
     return cl;
 }
 
-void enfilaCaixa(caixa **ca, int tempoProcessamentoItem)
+void enfilaCaixa(caixa **ca, int tempoProcessamentoItem, int id)
 {
     caixa *temp = inicializarCaixa();
     temp->tempoProcessamentoItem = tempoProcessamentoItem;
+    temp->id = id;
     temp->proximo = *ca;
     *ca = temp;
 }
@@ -51,9 +54,9 @@ void enfilaCliente(cliente **cl, int numeroItens)
 
 int desenfilaCliente(cliente **cl)
 {
-    cliente *aux = *cl;
-    if(aux->proximo != NULL)
+    if((*cl)->proximo != NULL)
     {
+        cliente *aux = *cl;
         while(aux->proximo->proximo != NULL)
         {
             aux = aux->proximo;
@@ -66,23 +69,24 @@ int desenfilaCliente(cliente **cl)
     }
     else
     {
-        int numeroItens = aux->numeroItens;
-        printf("%d", numeroItens);
-        //free(aux);
-        aux = NULL;
+        int numeroItens = (*cl)->numeroItens;
+        free(*cl);
+        *cl = NULL;
         return numeroItens;
     }
 }
 
-int calcularMenorTempoAtendimento(caixa *ca)
+int calcularMenorTempoAtendimento(caixa *ca, int *menorId)
 {
     int menorTempoAtendimento = ca->tempoAtendimento;
+    *menorId = ca->id;
     while(ca->proximo != NULL)
     {
         ca = ca->proximo;
-        if(ca->tempoAtendimento < menorTempoAtendimento)
+        if(ca->tempoAtendimento <= menorTempoAtendimento)
         {
             menorTempoAtendimento = ca->tempoAtendimento;
+            *menorId = ca->id;
         }
     }
     return menorTempoAtendimento;
@@ -104,11 +108,12 @@ int calcularMaiorTempoAtendimento(caixa *ca)
 
 void atendeCliente(caixa **ca, int numeroItens)
 {
-    int menorTempoAtendimento = calcularMenorTempoAtendimento(*ca);
+    int menorId;
+    int menorTempoAtendimento = calcularMenorTempoAtendimento(*ca, &menorId);
     caixa *aux = *ca;
-    while(true)
+    while(aux != NULL)
     {
-        if(aux->tempoAtendimento == menorTempoAtendimento)
+        if(aux->id == menorId)
         {
             aux->tempoAtendimento += aux->tempoProcessamentoItem * numeroItens;
             return;
@@ -117,17 +122,28 @@ void atendeCliente(caixa **ca, int numeroItens)
     }
 }
 
+//void impressora(caixa *ca)
+//{
+//    caixa *aux = ca;
+//    while(aux != NULL)
+//    {
+//        printf("%d ", aux->tempoAtendimento);
+//        aux = aux->proximo;
+//    }
+//    printf(".\n");
+//}
+
 int main()
 {
     int numeroCaixas, numeroClientes;
-    caixa *caixas;
-    cliente *clientes;
+    caixa *caixas = NULL;
+    cliente *clientes = NULL;
     scanf("%d %d", &numeroCaixas, &numeroClientes);
     for(int i = 0; i < numeroCaixas; i++)
     {
         int tempoCaixa;
         scanf(" %d", &tempoCaixa);
-        enfilaCaixa(&caixas, tempoCaixa);
+        enfilaCaixa(&caixas, tempoCaixa, i + 1);
     }
     for(int i = 0; i < numeroClientes; i++)
     {
@@ -137,8 +153,9 @@ int main()
     }
     while(clientes != NULL)
     {
+//        impressora(caixas);
         int numeroItens = desenfilaCliente(&clientes);
         atendeCliente(&caixas, numeroItens);
     }
-    printf("%d", calcularMaiorTempoAtendimento(caixas));
+    printf("%d\n", calcularMaiorTempoAtendimento(caixas));
 }
