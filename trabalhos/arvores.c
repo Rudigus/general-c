@@ -7,7 +7,7 @@ typedef struct no
     struct no *esq, *dir;
 } no;
 
-no* criaNo(int chave)
+no* criaNo(char chave)
 {
     no* novoNo = (no*) malloc(sizeof(no));
     novoNo->chave = chave;
@@ -16,7 +16,7 @@ no* criaNo(int chave)
     return novoNo;
 }
 
-no* montaArvore(int chaveRaiz, char *preOrdem, char *emOrdem, int numeroNos)
+no* montaArvore(char chaveRaiz, char *preOrdem, char *emOrdem, int numeroNos)
 {
     no* raiz = criaNo(chaveRaiz);
     // Se a raiz não for o primeiro nó do percurso em ordem da sua respectiva árvore, então ela terá uma subárvore esquerda.
@@ -89,7 +89,7 @@ int main()
         char preOrdem[52], emOrdem[52];
         scanf(" %s %s", preOrdem, emOrdem);
         // A pré-ordem começa pela raiz, logo o primeiro elemento do vetor pré-ordem será a chave da raiz.
-        int chaveRaiz = preOrdem[0];
+        char chaveRaiz = preOrdem[0];
         no* raiz = montaArvore(chaveRaiz, preOrdem, emOrdem, numeroNos);
     }
 }
