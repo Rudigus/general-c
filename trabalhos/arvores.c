@@ -19,8 +19,62 @@ no* criaNo(int chave)
 no* montaArvore(int chaveRaiz, char *preOrdem, char *emOrdem, int numeroNos)
 {
     no* raiz = criaNo(chaveRaiz);
-    // Checa para ver se a raiz tem uma subárvore esquerda
-    // Checa para ver se a raiz tem uma subárvore direita
+    // Se a raiz não for o primeiro nó do percurso em ordem da sua respectiva árvore, então ela terá uma subárvore esquerda.
+    if(chaveRaiz != emOrdem[0])
+    {
+        char aux = emOrdem[0];
+        int numeroNosEsq = 0, i = 0;
+        // Calculamos o número de nós da subárvore esquerda.
+        while(aux != chaveRaiz)
+        {
+            numeroNosEsq++;
+            aux = emOrdem[++i];
+        }
+        char chaveRaizEsq;
+        // Encontramos a chave da raiz da subárvore esquerda.
+        for(int i = 0; i < numeroNos; i++)
+        {
+            for(int j = 0; j < numeroNosEsq; j++)
+            {
+                if(preOrdem[i] == emOrdem[j])
+                {
+                    chaveRaizEsq = preOrdem[i];
+                    goto montaSubarvoreEsquerda;
+                }
+            }
+        }
+        // Montamos a subárvore esquerda.
+        montaSubarvoreEsquerda:
+            raiz->esq = montaArvore(chaveRaizEsq, preOrdem, emOrdem, numeroNosEsq);
+    }
+    // Se a raiz não for o último nó do percurso em ordem da sua respectiva árvore, então ela terá uma subárvore direita.
+    if(chaveRaiz != emOrdem[numeroNos-1])
+    {
+        char aux = emOrdem[numeroNos-1];
+        int numeroNosDir = 0, i = numeroNos - 1;
+        // Calculamos o número de nós da subárvore direita.
+        while(aux != chaveRaiz)
+        {
+            numeroNosDir++;
+            aux = emOrdem[--i];
+        }
+        char chaveRaizDir;
+        // Encontramos a chave da raiz da subárvore direita.
+        for(int i = 0; i < numeroNos; i++)
+        {
+            for(int j = 1; j <= numeroNosDir; j++)
+            {
+                if(preOrdem[i] == emOrdem[numeroNos - j])
+                {
+                    chaveRaizDir = preOrdem[i];
+                    goto montaSubarvoreDireita;
+                }
+            }
+        }
+        // Montamos a subárvore direita.
+        montaSubarvoreDireita:
+            raiz->dir = montaArvore(chaveRaizDir, preOrdem, emOrdem, numeroNosDir);
+    }
     return raiz;
 }
 
