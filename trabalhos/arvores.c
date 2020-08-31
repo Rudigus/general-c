@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+const int maxNos = 52;
+
 typedef struct no
 {
     char chave;
@@ -16,66 +18,46 @@ no* criaNo(char chave)
     return novoNo;
 }
 
-no* montaArvore(char chaveRaiz, char *preOrdem, char *emOrdem, int numeroNos)
+int procurarIndiceNo(char *chaves, int inicio, int fim, char chave)
 {
-    no* raiz = criaNo(chaveRaiz);
-    // Se a raiz não for o primeiro nó do percurso em ordem da sua respectiva árvore, então ela terá uma subárvore esquerda.
-    if(chaveRaiz != emOrdem[0])
+    for(int i = inicio; i <= fim; i++)
     {
-        char aux = emOrdem[0];
-        int numeroNosEsq = 0, i = 0;
-        // Calculamos o número de nós da subárvore esquerda.
-        while(aux != chaveRaiz)
+        if(chaves[i] == chave)
         {
-            numeroNosEsq++;
-            aux = emOrdem[++i];
+            return i;
         }
-        char chaveRaizEsq;
-        // Encontramos a chave da raiz da subárvore esquerda.
-        for(int i = 0; i < numeroNos; i++)
-        {
-            for(int j = 0; j < numeroNosEsq; j++)
-            {
-                if(preOrdem[i] == emOrdem[j])
-                {
-                    chaveRaizEsq = preOrdem[i];
-                    goto montaSubarvoreEsquerda;
-                }
-            }
-        }
-        // Montamos a subárvore esquerda.
-        montaSubarvoreEsquerda:
-            raiz->esq = montaArvore(chaveRaizEsq, preOrdem, emOrdem, numeroNosEsq);
     }
-    // Se a raiz não for o último nó do percurso em ordem da sua respectiva árvore, então ela terá uma subárvore direita.
-    if(chaveRaiz != emOrdem[numeroNos-1])
+    return -1;
+}
+
+int indexPreOrdem = 0;
+
+no* montaArvore(char *preOrdem, char *emOrdem, int inicioEmOrdem, int fimEmOrdem)
+{
+    if(inicioEmOrdem > fimEmOrdem)
     {
-        char aux = emOrdem[numeroNos-1];
-        int numeroNosDir = 0, i = numeroNos - 1;
-        // Calculamos o número de nós da subárvore direita.
-        while(aux != chaveRaiz)
-        {
-            numeroNosDir++;
-            aux = emOrdem[--i];
-        }
-        char chaveRaizDir;
-        // Encontramos a chave da raiz da subárvore direita.
-        for(int i = 0; i < numeroNos; i++)
-        {
-            for(int j = 1; j <= numeroNosDir; j++)
-            {
-                if(preOrdem[i] == emOrdem[numeroNos - j])
-                {
-                    chaveRaizDir = preOrdem[i];
-                    goto montaSubarvoreDireita;
-                }
-            }
-        }
-        // Montamos a subárvore direita.
-        montaSubarvoreDireita:
-            raiz->dir = montaArvore(chaveRaizDir, preOrdem, emOrdem, numeroNosDir);
+        return NULL;
     }
+    no* raiz = criaNo(preOrdem[indexPreOrdem++]);
+    if(inicioEmOrdem == fimEmOrdem)
+    {
+        return raiz;
+    }
+    int indexEmOrdem = procurarIndiceNo(emOrdem, inicioEmOrdem, fimEmOrdem, raiz->chave);
+    raiz->esq = montaArvore(preOrdem, emOrdem, inicioEmOrdem, indexEmOrdem - 1);
+    raiz->dir = montaArvore(preOrdem, emOrdem, indexEmOrdem + 1, fimEmOrdem);
     return raiz;
+}
+
+void printarPosOrdem(no *raiz)
+{
+    if(raiz == NULL)
+    {
+        return;
+    }
+    printarPosOrdem(raiz->esq);
+    printarPosOrdem(raiz->dir);
+    printf("%c", raiz->chave);
 }
 
 int main()
@@ -86,10 +68,11 @@ int main()
     {
         int numeroNos;
         scanf("%d", &numeroNos);
-        char preOrdem[52], emOrdem[52];
+        char preOrdem[maxNos], emOrdem[maxNos];
         scanf(" %s %s", preOrdem, emOrdem);
-        // A pré-ordem começa pela raiz, logo o primeiro elemento do vetor pré-ordem será a chave da raiz.
-        char chaveRaiz = preOrdem[0];
-        no* raiz = montaArvore(chaveRaiz, preOrdem, emOrdem, numeroNos);
+        indexPreOrdem = 0;
+        no* raiz = montaArvore(preOrdem, emOrdem, 0, numeroNos - 1);
+        printarPosOrdem(raiz);
+        printf("\n");
     }
 }
