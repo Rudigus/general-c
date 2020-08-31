@@ -20,7 +20,8 @@ no* criaNo(char chave)
 
 int procurarIndiceNo(char *chaves, int inicio, int fim, char chave)
 {
-    for(int i = inicio; i <= fim; i++)
+    int i;
+    for(i = inicio; i <= fim; i++)
     {
         if(chaves[i] == chave)
         {
@@ -64,7 +65,8 @@ int main()
 {
     int numeroCasos;
     scanf("%d", &numeroCasos);
-    for(int i = 0; i < numeroCasos; i++)
+    int i;
+    for(i = 0; i < numeroCasos; i++)
     {
         int numeroNos;
         scanf("%d", &numeroNos);
