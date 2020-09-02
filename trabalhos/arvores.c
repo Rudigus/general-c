@@ -33,6 +33,7 @@ int procurarIndiceNo(char *chaves, int inicio, int fim, char chave)
 
 int indexPreOrdem = 0;
 
+// xYz, Yxz -> Yzx | ABCDEF, CBAEDF -> CBEFDA
 no* montaArvore(char *preOrdem, char *emOrdem, int inicioEmOrdem, int fimEmOrdem)
 {
     if(inicioEmOrdem > fimEmOrdem)
