@@ -35,9 +35,9 @@ double** alocaMatriz(int l, int c)
     return m;
 }
 
+/* Lê valores para uma matriz de double com l linhas e m colunas alocadas dinamicamente */
 void leMatriz(double **m, int l, int c)
 {
-    /* LÍ valores para uma matriz de double com l linhas e m colunas alocadas dinamicamente */
     int i, j;
     
     for (i = 0; i < l; i++){
@@ -48,9 +48,9 @@ void leMatriz(double **m, int l, int c)
     }
 }
 
+/* imprime valores para uma matriz de double com l linhas e c colunas alocadas dinamicamente */
 void imprimeMatriz(double **m, int l, int c)
 {
-    /* imprime valores para uma matriz de double com l linhas e c colunas alocadas dinamicamente */
     int i, j;
     
     for (i = 0; i < l; i++){
@@ -79,7 +79,7 @@ int sretro(double **m, int n, double x[])
         
         if(m[i][i] == 0)
         {
-            if (fabs(m[i][n] - soma) < EPSILON) // x[i] È a vari·vel livre
+            if (fabs(m[i][n] - soma) < EPSILON) // x[i] É a variável livre
             {
                 x[i] = 0;
                 tipo = 1;
@@ -99,7 +99,46 @@ int sretro(double **m, int n, double x[])
     return tipo;
 }
 
-int main() {
+/* Recebe m, a matriz aumentada de um SL com n variáveis e transforma m na matriz aumentada de um SL TS equivalente ao SL fornecido como entrada
+ */
+void Gauss(double **m, int n)
+{
+    int i, j, k;
+    double *aux, mult;
+    
+    for(i = 0; i < n - 1; i++)
+    {
+        if(m[i][i] == 0)
+        { /* pivô nulo */
+            j = i + 1;
+            while(j < n && m[j][i] == 0)
+            {
+                j++;
+            }
+            if(j < n)
+            { /* trocando as linhas i e j */
+                aux = m[i];
+                m[i] = m[j];
+                m[j] = aux;
+            }
+        }
+        if(m[i][i] != 0)
+        {
+            for(j = i + 1; j < n; j++)
+            {
+                mult = -m[j][i] / m[i][i];
+                m[j][i] = 0;
+                for(k = i + 1; k <= n; k++)
+                {
+                    m[j][k] += mult * m[i][k];
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
     int i, n, tipo;
     double **m, *x;
     
@@ -117,6 +156,9 @@ int main() {
 
     leMatriz(m, n, n + 1);
     imprimeMatriz(m, n, n + 1);
+    Gauss(m, n);
+    printf("SL TS:\n");
+    imprimeMatriz(m, n, n + 1);
     tipo = sretro(m, n, x);
 
     if(tipo == 2)
@@ -132,4 +174,3 @@ int main() {
 
     return 0;
 }
-
