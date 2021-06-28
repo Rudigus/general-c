@@ -66,6 +66,63 @@ double pmbEE(MOCHILA p) {
 }
 /* fim pmbEE */
 
+/* coloca os itens da mochila em ordem decrescente de valor relativo (valor / peso) */
+void bolha(MOCHILA p) {
+    int i, j;
+    double aux;
+    for (i = 1; i < p.quantidade; i++) {
+        for (j = 1; j < p.quantidade; j++) {
+            if (p.valor[j] / p.peso[j] > p.valor[j - 1] / p.peso[j - 1]) {
+                aux = p.peso[j];
+                p.peso[j] = p.peso[j - 1];
+                p.peso[j - 1] = aux;
+                aux = p.valor[j];
+                p.valor[j] = p.valor[j - 1];
+                p.valor[j - 1] = aux;
+            }
+        }
+    }
+}
+/* fim bolha */
+
+/* devolve o valor de uma solução ótima para a instância do PMB armazenada em p */
+double pmbBB(MOCHILA p) {
+    int i, j, k = -1, it = 0, x[p.quantidade];
+    double capacidade = p.capacidade, valor = 0, max = -1;
+    bolha(p);
+    do {
+        for (i = k + 1; i < p.quantidade; i++) {
+            if (p.peso[i] <= capacidade) {
+                x[i] = 1;
+                capacidade -= p.peso[i];
+                valor += p.valor[i];
+            }
+            else {
+                x[i] = 0;
+            }
+        }
+        max = valor > max ? valor : max;
+        k = -1;
+        for (i = p.quantidade - 1; i >= 0; i--) {
+            if (x[i]) {
+                capacidade += p.peso[i];
+                valor -= p.valor[i];
+                if (i < p.quantidade - 1 && valor + capacidade * p.valor[i + 1] / p.peso[i + 1] >= max + 1) {
+                    k = i;
+                    break;
+                }
+            }
+        }
+        if (k > -1) {
+            x[k] = 0;
+        }
+        it++;
+    } while (k > -1);
+    printf("Iterações: %d\n", it);
+    return max;
+}
+/* fim pmbBB */
+
 int main() {
     int i;
     long tempo;
@@ -87,8 +144,11 @@ int main() {
         scanf("%lf", &p.valor[i]);
     }
     tempo = clock();
-    printf("\nSolução pmbPD: %lf (%lf ms)", pmbPD(p), (double) (clock() - tempo) / CLOCKS_PER_SEC * 1000);
+    printf("\nSolução pmbPD: %lf (%lf ms)\n", pmbPD(p), (double) (clock() - tempo) / CLOCKS_PER_SEC * 1000);
+    tempo = clock();
     printf("\nSolução pmbEE: %lf (%lf ms)\n", pmbEE(p), (double) (clock() - tempo) / CLOCKS_PER_SEC * 1000);
+    tempo = clock();
+    printf("Solução pmbBB: %lf (%lf ms)\n", pmbBB(p), (double) (clock() - tempo) / CLOCKS_PER_SEC * 1000);
     return 0;
 }
 /* fim main */
