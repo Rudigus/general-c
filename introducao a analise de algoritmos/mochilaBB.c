@@ -48,15 +48,18 @@ double pmbBB(MOCHILA p) {
         k = -1;
         int pesoTotal = 0;
         int valorTotal = 0;
-        printf("S%d(solução: ", it + 1);
+        printf("S%d(solução: [", it + 1);
         for (i = 0; i < p.quantidade; i++) {
             printf("%d", x[i]);
+            if (i != p.quantidade - 1) {
+                printf(", ");
+            }
             if (x[i]) {
                 valorTotal += p.valor[i];
                 pesoTotal += p.peso[i];
             }
         }
-        printf(", valor: %d", valorTotal);
+        printf("], valor: %d", valorTotal);
         printf(", peso: %d)", pesoTotal);
         printf("\n");
         for (i = p.quantidade - 1; i >= 0; i--) {
