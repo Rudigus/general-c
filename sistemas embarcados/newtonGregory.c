@@ -1,44 +1,23 @@
-#define TAM 5 // Quantidade de pontos m�xima a ser utilizada
+#define NG_TAM 45 // Quantidade de pontos máxima a ser utilizada
 
-struct delta {
-  double delta1;
-  double delta2;
-  double delta3;
-  double delta4;
-};
+int fatorial(int numero);
 
-// Fun��o que calcula os coeficientes de Gregory-Newton
-void D(double *x, double *y, int n, struct delta *O, double *DN) {
-  if (n >= 3) {
-
-    DN[0] = y[0];
-    for (int i = 0; i < n; i++) {
-      O[i].delta1 = (y[i + 1] - y[i]);
-    }
-    DN[1] = O[0].delta1;
-
-    for (int i = 0; i < n; i++) {
-      O[i].delta2 = (O[i + 1].delta1 - O[i].delta1);
-    }
-    DN[2] = O[0].delta2;
+// Função que calcula os coeficientes de Gregory-Newton
+void D(double *x, double *y, int n, double O[NG_TAM][NG_TAM], double *DN) {
+  int i, j;
+  DN[0] = y[0];
+  for (i = 0; i < n - 1; i++) {
+    O[i][0] = y[i + 1] - y[i];
   }
-
-  if (n >= 4) {
-    for (int i = 0; i < n; i++) {
-      O[i].delta3 = (O[i + 1].delta2 - O[i].delta2);
+  for (i = 1; i < n; i++) {
+    for (j = 0; j < n - i; j++) {
+      O[j][i] = O[j + 1][i - 1] - O[j][i - 1];
     }
-    DN[3] = O[0].delta3;
-  }
-
-  if (n >= 5) {
-    for (int i = 0; i < n; i++) {
-      O[i].delta4 = (O[i + 1].delta3 - O[i].delta3);
-    }
-    DN[4] = O[0].delta4;
+    DN[i] = O[0][i - 1];
   }
 }
 
-// Fun��o que calcula o polin�mio de Gregory-Newton
+// Função que calcula o polinômio de Gregory-Newton
 double P(double *x, double *y, double *DN, int n, double valor) {
   double h = x[2] - x[1];
   double u = (valor - x[0]) / h;
@@ -54,7 +33,7 @@ double P(double *x, double *y, double *DN, int n, double valor) {
   return result;
 }
 
-// Calcula o fatorial de um n�mero
+// Calcula o fatorial de um número
 int fatorial(int numero) {
   int result = numero;
   for (int i = 1; i < numero; i++) {

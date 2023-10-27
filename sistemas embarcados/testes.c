@@ -3,15 +3,6 @@
 
 #include "newtonGregory.h"
 
-#define TAM 5
-
-struct delta {
-  double delta1;
-  double delta2;
-  double delta3;
-  double delta4;
-};
-
 void executarBateriaTestes();
 int testeQuadratica(double xEscolhido);
 int testeCubica(double xEscolhido);
@@ -43,8 +34,8 @@ void executarBateriaTestes() {
 // 0 se o teste falhar
 int testeQuadratica(double xEscolhido) {
   // Estruturas auxiliares
-  double DN[TAM];
-  struct delta O[TAM];
+  double DN[NG_TAM];
+  double O[NG_TAM][NG_TAM];
   // Entrada
   double n = 4;
   double x[4] = {1, 2, 3, 4};
@@ -65,8 +56,8 @@ int testeQuadratica(double xEscolhido) {
 
 int testeCubica(double xEscolhido) {
   // Estruturas auxiliares
-  double DN[TAM];
-  struct delta O[TAM];
+  double DN[NG_TAM];
+  double O[NG_TAM][NG_TAM];
   // Entrada
   double n = 4;
   double x[4] = {1, 2, 3, 4};
