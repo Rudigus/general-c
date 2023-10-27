@@ -1,6 +1,0 @@
-#ifndef BATERIATESTES_H_INCLUDED
-#define BATERIATESTES_H_INCLUDED
-
-void executarBateriaTestes();
-
-#endif // BATERIATESTES_H_INCLUDED

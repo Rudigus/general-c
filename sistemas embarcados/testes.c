@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include "main.h"
+#include <locale.h>
+
+#include "newtonGregory.h"
 
 #define TAM 5
 
@@ -10,7 +12,13 @@ struct delta {
   double delta4;
 };
 
-double h;
+void executarBateriaTestes();
+int testeQuadratica(double xEscolhido);
+int testeCubica(double xEscolhido);
+
+void main() {
+  executarBateriaTestes();
+}
 
 void executarBateriaTestes() {
   int numSucessos = 0;
@@ -18,14 +26,15 @@ void executarBateriaTestes() {
   int numTestes = 3;
   double valoresTeste[] = {2.5, 5, 13.5};
 
+  setlocale(LC_ALL,"Portuguese");
+
   for (int i = 0; i < numTestes; i++) {
     numSucessos += testeQuadratica(valoresTeste[i]);
     numSucessos += testeCubica(valoresTeste[i]);
   }
   numFalhas = numTestes * 2 - numSucessos;
 
-  printf("\nResultado da bateria de testes:\n\n");
-  printf("Fun��o quadr�tica:\n");
+  printf("\n\nResultado da bateria de testes:\n");
   printf("\nTestes com sucesso: %d", numSucessos);
   printf("\nTestes com falha: %d", numFalhas);
 }
@@ -41,8 +50,7 @@ int testeQuadratica(double xEscolhido) {
   double x[4] = {1, 2, 3, 4};
   double y[4] = {1, 4, 9, 16};
 
-  h = x[1] - x[0];
-  D(x, y, n, O, DN, xEscolhido);
+  D(x, y, n, O, DN);
   double resultado = P(x, y, DN, n, xEscolhido);
 
   double yEsperado = xEscolhido * xEscolhido;
@@ -64,8 +72,7 @@ int testeCubica(double xEscolhido) {
   double x[4] = {1, 2, 3, 4};
   double y[4] = {1, 8, 27, 64};
 
-  h = x[1] - x[0];
-  D(x, y, n, O, DN, xEscolhido);
+  D(x, y, n, O, DN);
   double resultado = P(x, y, DN, n, xEscolhido);
 
   double yEsperado = xEscolhido * xEscolhido * xEscolhido;
