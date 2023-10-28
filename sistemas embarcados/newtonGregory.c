@@ -1,6 +1,6 @@
 #define NG_TAM 45 // Quantidade de pontos máxima a ser utilizada
 
-int fatorial(int numero);
+double fatorial(int numero);
 
 // Função que calcula os coeficientes de Gregory-Newton
 void D(double *x, double *y, int n, double O[NG_TAM][NG_TAM], double *DN) {
@@ -34,8 +34,8 @@ double P(double *x, double *y, double *DN, int n, double valor) {
 }
 
 // Calcula o fatorial de um número
-int fatorial(int numero) {
-  int result = numero;
+double fatorial(int numero) {
+  double result = numero;
   for (int i = 1; i < numero; i++) {
     result = result * (numero - 1);
     numero = numero - 1;

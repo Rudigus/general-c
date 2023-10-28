@@ -42,7 +42,7 @@ int main() {
   D(x, y, n, O, DN);       // Calcula os coeficientes de Newton
   result = P(x, y, DN, n, valor); // Calcula o polinômio de Newton no ponto
   print(x, y, DN, result, n);
-  printTabela(O, n, y);
+  //printTabela(O, n, y);
 
   return 0;
 }
