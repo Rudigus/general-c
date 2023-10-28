@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
 
-#include "newtonGregory.h"
+#include "newton_gregory.h"
 
 // Declaração das funções
 

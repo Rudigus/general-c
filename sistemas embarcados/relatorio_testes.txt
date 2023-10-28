@@ -1,0 +1,9 @@
+Histórico de testes:
+
+Acerto, x utilizado: 1,500000, y encontrado: 3,000000
+Acerto, x utilizado: 2,500000, y encontrado: 5,000000
+
+Relatório da bateria de testes:
+
+Número de acertos: 2
+Número de erros: 0
