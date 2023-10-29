@@ -2,8 +2,17 @@ Histórico de testes:
 
 Acerto, x utilizado: 1,500000, y encontrado: 3,000000
 Acerto, x utilizado: 2,500000, y encontrado: 5,000000
+Acerto, x utilizado: 1,300000, y encontrado: 1,690000
+Acerto, x utilizado: 3,700000, y encontrado: 13,690000
+Acerto, x utilizado: 4,400000, y encontrado: 19,360000
+Acerto, x utilizado: 7,450000, y encontrado: 55,502500
+Acerto, x utilizado: 13,890000, y encontrado: 192,932100
+Acerto, x utilizado: 44,500000, y encontrado: 1980,250000
+Erro, x utilizado: 0,000102, y encontrado: 11854863860,09710700000000000000, y esperado: 0,00000001040400000000
+Erro, x utilizado: 0,000245, y encontrado: -1126318494,90442560000000000000, y esperado: 0,00000006002500000000
+Erro, x utilizado: 0,004444, y encontrado: -5132682168754,85640000000000000000, y esperado: 0,00001974913000000000
 
 Relatório da bateria de testes:
 
-Número de acertos: 2
-Número de erros: 0
+Número de acertos: 8
+Número de erros: 3

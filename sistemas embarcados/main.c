@@ -54,7 +54,7 @@ void print(double *x, double *y, double *DN, double result, int n) {
   printf("Os pontos utilizados foram:\n");
 
   for (int i = 0; i < n; i++) {
-    printf("X%d = %.2lf, Y%d = %.2lf\n\n", i, x[i], i, y[i]);
+    printf("X%d = %lf, Y%d = %lf\n\n", i, x[i], i, y[i]);
   }
   printf("Os coeficientes de Newton são:\n");
 
