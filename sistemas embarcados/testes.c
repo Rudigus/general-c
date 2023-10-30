@@ -8,7 +8,7 @@
 FILE *abrirArquivoRelatorioTestes();
 int aproximadamenteIgual(double a, double b, double maximaDiferencaRelativa);
 
-void main() {
+int main() {
   int numPontos, numTestes;
   double x[NG_TAM];
   double y[NG_TAM];
@@ -29,7 +29,7 @@ void main() {
     FILE *arquivoResultado = abrirArquivoRelatorioTestes();
     fprintf(arquivoResultado, "Não foi possível ler o arquivo da bateria de testes.\n");
     fclose(arquivoResultado);
-    return;
+    return 1;
   }
 
   FILE *arquivoRelatorio = abrirArquivoRelatorioTestes();
