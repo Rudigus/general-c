@@ -1,0 +1,10 @@
+# ignores every extensionless file (compiled C programs on Mac)
+*
+!*/
+!*.*
+
+# compiled C programs on Windows
+*.exe
+
+# C object files
+*.o
