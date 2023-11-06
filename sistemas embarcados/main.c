@@ -38,9 +38,10 @@ int main() {
   for (int i = 0; i < n; i++) {
     scanf("%lf", &y[i]);
   }
-
-  D(x, y, n, O, DN);       // Calcula os coeficientes de Newton
-  result = P(x, y, DN, n, valor); // Calcula o polinômio de Newton no ponto
+  // Calcula os coeficientes de Newton
+  D(x, y, n, O, DN);
+  // Calcula o polinômio de Newton no ponto
+  result = P(x, y, DN, n, valor);
   print(x, y, DN, result, n);
   //printTabela(O, n, y);
 

@@ -1,7 +1,8 @@
 #ifndef NEWTONGREGORY_H_INCLUDED
 #define NEWTONGREGORY_H_INCLUDED
 
-#define NG_TAM 45 // Quantidade de pontos máxima a ser utilizada
+// Quantidade de pontos máxima a ser utilizada
+#define NG_TAM 45
 
 void D(double *x, double *y, int n, double O[NG_TAM][NG_TAM], double *DN);
 
